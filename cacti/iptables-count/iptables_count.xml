@@ -1,0 +1,38 @@
+<interface>
+	<name>Get Iptables marked packets count</name>
+	<oid_index>.1.3.6.1.4.1.2021.3027.1</oid_index>
+	<index_order>icMarkID:icIndex</index_order>
+	<index_order_type>numeric</index_order_type>
+	<index_title_format>|chosen_order_field|</index_title_format>
+
+	<fields>
+		<icIndex>
+			<name>Index</name>
+			<method>walk</method>
+			<source>value</source>
+			<direction>input</direction>
+			<oid>.1.3.6.1.4.1.2021.3027.1</oid>
+		</icIndex>
+		<icName>
+			<name>Name</name>
+			<method>walk</method>
+			<source>value</source>
+			<direction>input</direction>
+			<oid>.1.3.6.1.4.1.2021.3027.2</oid>
+		</icName>
+		<icInCount>
+			<name>Bytes count</name>
+			<method>walk</method>
+			<source>value</source>
+			<direction>output</direction>
+			<oid>.1.3.6.1.4.1.2021.3027.3</oid>
+		</icInCount>
+                <icMarkId>
+                        <name>Mark ID</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>.1.3.6.1.4.1.2021.3027.4</oid>
+                </icMarkId>
+	</fields>
+</interface>
