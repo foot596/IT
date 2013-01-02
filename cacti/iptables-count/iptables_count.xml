@@ -1,7 +1,7 @@
 <interface>
 	<name>Get Iptables marked packets count</name>
 	<oid_index>.1.3.6.1.4.1.2021.3027.1</oid_index>
-	<index_order>icMarkID:icIndex</index_order>
+	<index_order>icMarkId:icIndex</index_order>
 	<index_order_type>numeric</index_order_type>
 	<index_title_format>|chosen_order_field|</index_title_format>
 
@@ -28,7 +28,7 @@
 			<oid>.1.3.6.1.4.1.2021.3027.3</oid>
 		</icInCount>
                 <icMarkId>
-                        <name>Mark ID</name>
+                        <name>Mark id</name>
                         <method>walk</method>
                         <source>value</source>
                         <direction>input</direction>
