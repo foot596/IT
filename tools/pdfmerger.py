@@ -45,7 +45,7 @@ for f in files:
                     en_name = current_dir.replace (" ", "_")
                     en_page = m2.group(1).replace (" ", "_")
                 else:
-                    raise ValueError
+                    raise ValueError("Can't parse filename: %s", file_name) 
 
                 if not books.has_key(en_name):
                     books[en_name] = {}                    
@@ -53,7 +53,7 @@ for f in files:
                 break
        
             except ValueError as e:
-                logger.debug("%s: %s", type(e).__name__, e.args)
+                logger.error("%s: %s", type(e).__name__, e.args)
                 pass
 
 for book_name in books:
