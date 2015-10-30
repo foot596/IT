@@ -6,13 +6,14 @@ from PyPDF2 import PdfFileReader, PdfFileMerger
 import img2pdf
 import StringIO
 import logging
+import re
 
 result_dir = 'pdf'
 extensions = ('pdf', 'jpg', 'tiff')
-page_separators = ('-', '_')
+page_separators = ('-')
 
 logger = logging.getLogger('pdfmerger')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s %(message)s')
 fh = logging.FileHandler('pdfmerger.log')
 fh.setFormatter(formatter)
@@ -24,6 +25,7 @@ logger.addHandler(ch)
 logger.info("PDFMerger v0.1")
 
 books = {}
+current_dir = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
 files = [f for f in os.listdir('.') if os.path.isfile(f) and f.rpartition('.')[2] in extensions ]
 
 for f in files:
@@ -31,15 +33,27 @@ for f in files:
     if len(file_name) > 0:     
         for sep in page_separators:
             try:
-                en = file_name.rpartition(sep)
-                en_name = en[0]
-                en_page = int(en[2])
-                if len(en_name) > 0 and en_page:
-                    if not books.has_key(en_name):
-                        books[en_name] = {}                    
-                    books[en_name][en_page] = f
-                    break
-            except Exception as e:
+                logger.debug("Filename: %s", file_name)  
+                m1 = re.match(r"^(.*)-(\d+.*)$", file_name)
+                m2 = re.match(r"^(\d+.*)$", file_name)         
+                if m1:
+                    logger.debug("m1.groups(): %s", m1.groups())
+                    en_name = m1.group(1).replace (" ", "_")
+                    en_page = m1.group(2).replace (" ", "_")
+                elif m2:
+                    logger.debug("m1.groups(): %s", m2.groups())
+                    en_name = current_dir.replace (" ", "_")
+                    en_page = m2.group(1).replace (" ", "_")
+                else:
+                    raise ValueError
+
+                if not books.has_key(en_name):
+                    books[en_name] = {}                    
+                books[en_name][en_page] = f
+                break
+       
+            except ValueError as e:
+                logger.debug("%s: %s", type(e).__name__, e.args)
                 pass
 
 for book_name in books:
